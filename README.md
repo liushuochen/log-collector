@@ -1,0 +1,1 @@
+# kubernetes-resource-infomation-collector
