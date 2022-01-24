@@ -1,0 +1,11 @@
+# Default values for collector-prerequisite.
+# This is a YAML formatted file.
+# Declare variables to be passed into your templates.
+
+# Description: If the value of scope is namespace, collector-prerequisite will create ServiceAccount, Role and
+# RoleBinding as a group of RBAC resources. Otherwise collector-prerequisite will create ClusterRole and
+# ClusterRoleBinding instead of Role and RoleBinding.
+#
+# Default: namespace
+# Support: `namespace` and `cluster`
+scope: "namespace"

@@ -1,0 +1,8 @@
+# This file stores the version information of each component of Kubernetes-resource-information-collector
+
+
+# tool version
+VERSION=0.1.0
+
+# charts version
+COLLECTOR_CHARTS_PREREQUISITE_VERSION=1.0.0
