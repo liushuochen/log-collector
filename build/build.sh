@@ -41,6 +41,13 @@ function replace_version {
     # Replace version in README.md
     sed -i '.bak' "s/# kubernetes-resource-infomation-collector version/# kubernetes-resource-infomation-collector ${VERSION}/g" "${release_directory}"/README.md
     rm -rf "${release_directory}"/README.md.bak
+
+    # Replace version in manage.sh
+    sed -i '.bak' "s/    echo VERSION/    echo ${VERSION}/g" "${release_directory}"/manage.sh
+    rm -rf "${release_directory}"/manage.sh.bak
+
+    sed -i '.bak' "s/COLLECTOR_PREREQUISITE_CHART_VERSION=version/COLLECTOR_PREREQUISITE_CHART_VERSION=${COLLECTOR_CHARTS_PREREQUISITE_VERSION}/g" "${release_directory}"/manage.sh
+    rm -rf "${release_directory}"/manage.sh.bak
 }
 
 # This function is used to copy source code(helm charts, README and go etc.) to integrate directory
@@ -54,6 +61,10 @@ function copy_source_code {
 
     # Copy README.
     cp "${root_path}/README.md" "${release_directory}"
+
+    # Copy management tool
+    cp "${root_path}/manage/manage.sh" "${release_directory}"
+    chmod 740 "${release_directory}/manage.sh"
 }
 
 # This function is used to delete source code after building
