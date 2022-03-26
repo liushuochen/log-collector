@@ -48,6 +48,10 @@ function replace_version {
 
     sed -i '.bak' "s/COLLECTOR_PREREQUISITE_CHART_VERSION=version/COLLECTOR_PREREQUISITE_CHART_VERSION=${COLLECTOR_CHARTS_PREREQUISITE_VERSION}/g" "${release_directory}"/manage.sh
     rm -rf "${release_directory}"/manage.sh.bak
+
+    # Replace version in collector
+    sed -i '.bak' "s/__VERSION__/${COLLECTOR_COLLECTOR_VERSION}/g" "${release_directory}"/collector/module/service.go
+    rm -rf "${release_directory}"/collector/module/service.go.bak
 }
 
 # This function is used to copy source code(helm charts, README and go etc.) to integrate directory
@@ -65,6 +69,9 @@ function copy_source_code {
     # Copy management tool
     cp "${root_path}/manage/manage.sh" "${release_directory}"
     chmod 740 "${release_directory}/manage.sh"
+
+    # Copy collector
+    cp -r "${root_path}/collector" "${release_directory}"
 }
 
 # This function is used to delete source code after building
@@ -73,6 +80,26 @@ function delete_source_code {
 
     # Delete collector-prerequisite chart without values-override.yaml
     rm -rf "${release_directory}/collector-prerequisite"
+
+    # Delete server code
+    rm -rf "${release_directory}/collector"
+}
+
+# This function used to build each components
+function build_components {
+    release_directory=$1
+
+    # build collector-prerequisite
+    # Notice that cannot delete this `cd` command, or it will be generate helm charts in current directory
+    cd "${release_directory}"
+    helm package "${release_directory}"/collector-prerequisite
+    cd -
+
+    # build log-collector server code
+    cd "$release_directory"/collector/cmd
+    go build -o log-collector main.go
+    mv log-collector "${release_directory}/"
+    cd -
 }
 
 # Main function for this script.
@@ -104,9 +131,7 @@ function main {
     replace_version "${release_directory}"
 
     # build components
-    cd "${release_directory}"
-    helm package "${release_directory}"/collector-prerequisite
-    cd -
+    build_components "${release_directory}"
 
     # delete source code which in release directory
     delete_source_code "${release_directory}"
