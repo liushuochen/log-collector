@@ -1,0 +1,1 @@
+liushuochen/kric-log-collector=v0.0.0

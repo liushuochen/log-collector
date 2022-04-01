@@ -3,8 +3,14 @@ package main
 import (
 	"fmt"
 	"log-collector/config"
+	"log-collector/module"
 	"log-collector/route"
 )
+
+func init() {
+	config.InitGlobalVariable()
+	module.InitDatabase()
+}
 
 func main() {
 	router := route.InitRouter()
