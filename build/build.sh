@@ -28,6 +28,11 @@ function check {
     if [[ $? -ne 0 ]]; then
         error "Command not found: helm" 2
     fi
+
+    command go > /dev/null 2>&1
+    if [[ $? -ne 2 ]]; then
+        error "Command not found: go" 2
+    fi
 }
 
 # This function is used to inject version information to each component.
