@@ -27,7 +27,7 @@ class downloadTable extends React.Component {
                     <thead>
                         <tr>
                             <td>tgz资源包名称</td>
-                            <td>版本</td>
+                            <td>版本号</td>
                             <td>最后更新日期</td>
                             <td>下载次数</td>
                         </tr>
