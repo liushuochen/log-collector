@@ -1,0 +1,25 @@
+.downloadTable{
+    background-color: cornflowerblue;
+    margin: 0 auto;
+    width: 100%;
+    height: 5vh;
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.downloadTable td{
+    width: 25%;
+    border: 2px solid black;
+}
+
+.pageHeader {
+    min-height: 15vh;
+    background-color: darkslateblue;
+    width: 100%;
+    font-size: 15pt;
+    color: aquamarine;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
