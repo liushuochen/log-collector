@@ -3,9 +3,10 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
 	"log-collector/api/resp"
 	"log-collector/controller"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Service struct{}
@@ -13,13 +14,17 @@ type Service struct{}
 // HealthCheck function used to check service status.
 // Currently is only return a simple HTTP response without doing nothing.
 // Consider using it in kubernetes pod livenessProve.
+// Response (not real HTTP response) example:
+// {
+//     "status": "running"
+// }
 func (service *Service) HealthCheck(c *gin.Context) {
 	response := controller.ServiceHealthCheck()
 	resp.SendResponse(c, resp.Ok, response)
 }
 
 // Version function used to get the version information.
-// response (not real HTTP response) example:
+// Response (not real HTTP response) example:
 // {
 //     "service_version": "0.0.0",
 //     "go_version": "go1.16.5"

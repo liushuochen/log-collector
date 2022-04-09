@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"log-collector/config"
 	"log-collector/module"
 	"log-collector/route"

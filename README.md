@@ -1,4 +1,4 @@
-# kubernetes-resource-infomation-collector version
+# log-collector version
 
 # How to use
 - Install the collector-prerequisite

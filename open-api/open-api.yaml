@@ -1,0 +1,101 @@
+openapi: 3.0.2
+info:
+  title: log-collector server
+  version: 0.0.0.__version__
+  contact:
+    name: log-collector developers
+    email: shuochen2017@qq.com
+  description: log-collector server
+  license:
+    name: Copyright Log-collector developers.
+servers:
+- url: "http://127.0.0.1:9188/logcollector/v1"
+  description: log-collector service endpoint in local machine.
+  variables:
+    port:
+      enum:
+      - "9188"
+      default: "9188"
+      description: This value is assigned by service provider, default is 9188.
+paths:
+  /health:
+    summary: Health check
+    description: Health check for log-collector service.
+    get:
+      summary: Health check
+      description: Health check for log-collector service.
+      tags:
+      - service
+      responses:
+        200:
+          description: OK
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP response status code
+                  success:
+                    type: boolean
+                    description: Is it successful
+                  message:
+                    type: object
+                    description: response main message
+                    properties:
+                      status:
+                        type: string
+                        description: log-collector service state
+              example: |-
+                {
+                  "code": 200,
+                  "success": true,
+                  "message": {
+                    "status": "running"
+                  }
+                }
+  /version:
+    summary: Get the version info
+    description: Get the version information of log-collector service
+    get:
+      summary: Get the version info
+      description: Get the version information of log-collector service
+      tags:
+      - service
+      responses:
+        200:
+          description: OK
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: HTTP response status code
+                  success:
+                    type: boolean
+                    description: Is it successful
+                  message:
+                    type: object
+                    description: response main message
+                    properties:
+                      service_version:
+                        type: string
+                        description: log-collector service version
+                      go_version:
+                        type: string
+                        description: Go runtime version
+              example: |-
+                {
+                  "code": 200,
+                  "success": true,
+                  "message": {
+                    "service_version": "0.1.0",
+                    "go_version": "go1.16.5"
+                  }
+                }
+tags:
+- name: service
+  description: Operation for log-collector service
