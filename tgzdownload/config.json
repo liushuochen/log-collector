@@ -1,0 +1,8 @@
+{
+    "mysqlOptions": {
+        "host": "localhost",
+        "username": "root",
+        "password": "root",
+        "database": "local_log_collector"
+    }
+}
