@@ -1,4 +1,4 @@
-.downloadTable{
+.downloadTable {
     background-color: cornflowerblue;
     margin: 0 auto;
     width: 100%;
@@ -8,7 +8,7 @@
     text-align: center;
 }
 
-.downloadTable td{
+.downloadTable td {
     width: 25%;
     border: 2px solid black;
 }

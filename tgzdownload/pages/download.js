@@ -9,11 +9,11 @@ class downloadTable extends React.Component {
             tgzResource: this.props.posts.resource,
         }
     }
-    
+
     render() {
         const CreateRow = (props) => {
             const items = props.items;
-            const listItem = items.map(item => 
+            const listItem = items.map(item =>
                 <tr key={item.id}>
                     <td>{item.tgzName}</td>
                     <td>{item.version}</td>
@@ -22,7 +22,7 @@ class downloadTable extends React.Component {
                 </tr>
             )
 
-            return(
+            return (
                 <table className={styles.downloadTable}>
                     <thead>
                         <tr>
@@ -39,7 +39,7 @@ class downloadTable extends React.Component {
             )
         }
 
-        return(
+        return (
             <div>
                 <header className={styles.pageHeader}>
                     Welcome to KUBERNETES-RESOURCE-INFORMATION-COLLECTOR
@@ -50,7 +50,7 @@ class downloadTable extends React.Component {
     }
 }
 
-export const getStaticProps = async() => {
+export const getStaticProps = async () => {
     const res = await fetch('http://localhost:3000/api/downloadList', {
         method: 'get',
     });
@@ -58,7 +58,7 @@ export const getStaticProps = async() => {
     // 通过返回 { props: { posts } } 对象，上面组件在构建时将接收到 `posts` 参数
     return {
         props: {
-        posts,
+            posts,
         },
     }
 }
