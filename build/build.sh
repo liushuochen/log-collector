@@ -58,9 +58,9 @@ function replace_version {
     sed -i '.bak' "s/__VERSION__/${COLLECTOR_COLLECTOR_VERSION}/g" "${release_directory}"/collector/module/service.go
     rm -rf "${release_directory}"/collector/module/service.go.bak
 
-    # Replace version in tgzdownloads
-    sed -i '.bak' "s/__VERSION__/${TGZDOWNLOADS_VERSION}/g" "${release_directory}"/tgzdownload/package.json
-    rm -rf "${release_directory}"/tgzdownload/package.json.bak
+    # Replace version in lcweb
+    sed -i '.bak' "s/__VERSION__/${WEBVERSION}/g" "${release_directory}"/lcweb/package.json
+    rm -rf "${release_directory}"/lcweb/package.json.bak
 }
 
 # This function is used to copy source code(helm charts, README and go etc.) to integrate directory
@@ -82,8 +82,8 @@ function copy_source_code {
     # Copy collector
     cp -r "${root_path}/collector" "${release_directory}"
 
-    # Copy tgzdownload
-    cp -r "${root_path}/tgzdownload" "${release_directory}"
+    # Copy lcweb
+    cp -r "${root_path}/lcweb" "${release_directory}"
 }
 
 # This function is used to delete source code after building
