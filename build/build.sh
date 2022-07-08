@@ -55,7 +55,7 @@ function replace_version {
     rm -rf "${release_directory}"/manage.sh.bak
 
     # Replace version in collector
-    sed -i '.bak' "s/__VERSION__/${COLLECTOR_COLLECTOR_VERSION}/g" "${release_directory}"/collector/module/service.go
+    sed -i '.bak' "s/__VERSION__/${COLLECTOR_COLLECTOR_VERSION}/g" "${release_directory}"/collector/config/service.go
     rm -rf "${release_directory}"/collector/module/service.go.bak
 
     # Replace version in lcweb
