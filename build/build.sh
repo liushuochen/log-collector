@@ -54,9 +54,13 @@ function replace_version {
     sed -i '.bak' "s/COLLECTOR_PREREQUISITE_CHART_VERSION=version/COLLECTOR_PREREQUISITE_CHART_VERSION=${COLLECTOR_CHARTS_PREREQUISITE_VERSION}/g" "${release_directory}"/manage.sh
     rm -rf "${release_directory}"/manage.sh.bak
 
-    # Replace version in collector
+    # Replace version in api component
+    sed -i '.bak' "s/__VERSION__/${COLLECTOR_API_VERSION}/g" "${release_directory}"/api/config/service.go
+    rm -rf "${release_directory}"/api/config/service.go.bak
+
+    # Replace version in collector component
     sed -i '.bak' "s/__VERSION__/${COLLECTOR_COLLECTOR_VERSION}/g" "${release_directory}"/collector/config/service.go
-    rm -rf "${release_directory}"/collector/module/service.go.bak
+    rm -rf "${release_directory}"/collector/config/service.go.bak
 
     # Replace version in lcweb
     sed -i '.bak' "s/__VERSION__/${WEBVERSION}/g" "${release_directory}"/lcweb/package.json
