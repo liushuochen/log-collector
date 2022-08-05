@@ -29,4 +29,5 @@ func InitRouter() *gin.Engine {
 func initServiceRouter(group *gin.RouterGroup) {
 	service := new(api.Service)
 	group.GET("/health", service.HealthCheck)
+	group.GET("/version", service.Version)
 }

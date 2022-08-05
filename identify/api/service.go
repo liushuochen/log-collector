@@ -21,3 +21,14 @@ func (service *Service) HealthCheck(c *gin.Context) {
 	response := controller.ServiceHealthCheck()
 	resp.SendResponse(c, resp.Ok, response)
 }
+
+// Version function used to get the version information.
+// Response (not real HTTP response) example:
+// {
+//     "collector_version": "0.0.0",
+//     "build": "go1.16.5"
+// }
+func (service *Service) Version(c *gin.Context) {
+	response := controller.GetServiceVersion()
+	resp.SendResponse(c, resp.Ok, response)
+}

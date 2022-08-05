@@ -11,3 +11,8 @@ func ServiceHealthCheck() *module.Health {
 	result.Status = module.ServiceRunningStatus
 	return result
 }
+
+// GetServiceVersion returns a *module.Version that contains version information.
+func GetServiceVersion() *module.Version {
+	return module.GetVersion()
+}
