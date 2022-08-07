@@ -12,7 +12,7 @@ import (
 type Service struct{}
 
 // HealthCheck function used to check service status.
-// Currently is only return a simple HTTP response without doing nothing.
+// Currently, is only return a simple HTTP response without doing nothing.
 // Consider using it in kubernetes pod livenessProve.
 // Response (not real HTTP response) example:
 // {
@@ -26,8 +26,8 @@ func (service *Service) HealthCheck(c *gin.Context) {
 // Version function used to get the version information.
 // Response (not real HTTP response) example:
 // {
-//     "service_version": "0.0.0",
-//     "go_version": "go1.16.5"
+//     "collector_version": "0.0.0",
+//     "build": "go1.16.5"
 // }
 func (service *Service) Version(c *gin.Context) {
 	response := controller.GetServiceVersion()

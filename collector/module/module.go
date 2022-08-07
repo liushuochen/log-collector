@@ -33,4 +33,6 @@ func InitDatabase() {
 
 func createTables() {
 	initLog()
+	initResource()
+	initCluster()
 }

@@ -2,10 +2,11 @@
 package route
 
 import (
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
 	"log-collector/api"
 	"log-collector/requests"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 )
 
 // InitRouter function used to init router, include origins, methods, headers, credentials, api groups.
@@ -19,8 +20,12 @@ func InitRouter() *gin.Engine {
 		AllowCredentials: true,
 	}))
 
-	apiServiceV1 := router.Group("/logcollector/v1")
+	apiServiceV1 := router.Group("/collector/v1")
 	initServiceRouter(apiServiceV1)
+	initClusterRouter(apiServiceV1)
+
+	apiServiceV2 := router.Group("/collector/v2")
+	initClusterRouterV2(apiServiceV2)
 
 	return router
 }
@@ -29,4 +34,14 @@ func initServiceRouter(group *gin.RouterGroup) {
 	service := new(api.Service)
 	group.GET("/health", service.HealthCheck)
 	group.GET("/version", service.Version)
+}
+
+func initClusterRouter(group *gin.RouterGroup) {
+	cluster := new(api.Cluster)
+	group.POST("/cluster/create", cluster.CreateWithKubeConfigContent)
+}
+
+func initClusterRouterV2(group *gin.RouterGroup) {
+	cluster := new(api.Cluster)
+	group.POST("/cluster/create", cluster.CreateWithKubeConfigFile)
 }

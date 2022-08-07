@@ -1,10 +1,9 @@
 // Package exception define all self exception types.
-// This file define basic self exception type, functions and methods.
+// This file defines basic self exception type, functions and methods.
 package exception
 
-
 type baseError struct {
-	message  string
+	message string
 }
 
 func newBaseError(message string) baseError {

@@ -55,3 +55,23 @@ func (md *MySQLDatabase) CreateTable(table interface{}, engine, charset, collate
 		engine, charset, collate)
 	return md.db.Set("gorm:table_options", options).AutoMigrate(table)
 }
+
+// Create method used to insert a value to a table. It will return an error while insert failed.
+func (md *MySQLDatabase) Create(data interface{}) error {
+	return md.db.Create(data).Error
+}
+
+// Update method used to update a value to a table. It will return an error while update failed.
+func (md *MySQLDatabase) Update(data interface{}) error {
+	return md.db.Save(data).Error
+}
+
+// Search method used to find values based on query and args in a table. It will return an error while search failed.
+func (md *MySQLDatabase) Search(data, query interface{}, args ...interface{}) error {
+	return md.db.Where(query, args).Find(data).Error
+}
+
+// SearchWithoutQuery method used to find all values in a table. It will return an error while search failed.
+func (md *MySQLDatabase) SearchWithoutQuery(data interface{}) error {
+	return md.db.Find(data).Error
+}

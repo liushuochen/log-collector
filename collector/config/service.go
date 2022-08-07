@@ -8,30 +8,37 @@ import (
 	"strconv"
 )
 
+const (
+	// ServiceVersion indicates the version number of log-collector. Default is "0.0.0". It will be reset in build.sh
+	// file.
+	ServiceVersion = "__VERSION__"
+)
+
 var (
 	// ServiceHost indicate log-collector host
 	ServiceHost = "0.0.0.0"
 
-	// ServicePort indicate log-collector port. It equal to environment variable "LOG_COLLECTOR_PORT", default is "9188"
-	ServicePort = ""
+	// ServicePort indicate log-collector port. It equal to environment variable "LOG_COLLECTOR_COLLECTOR_PORT", default
+	// is 9189.
+	ServicePort = 9189
 
-	// DatabaseType indicate connection the type of database. It equal to environment variable
+	// DatabaseType indicate connection the type of database. It equals to environment variable
 	// "LOG_COLLECTOR_DATABASE_TYPE", default is "mysql"
 	DatabaseType = ""
 
-	// DatabaseUser indicate connection the username of database. It equal to environment variable
+	// DatabaseUser indicate connection the username of database. It equals to environment variable
 	// "LOG_COLLECTOR_DATABASE_USER". If the value of DatabaseUser is empty, a panic will be raised.
 	DatabaseUser = ""
 
-	// DatabasePWD indicate connection the pwd of database. It equal to environment variable
+	// DatabasePWD indicate connection the pwd of database. It equals to environment variable
 	// "LOG_COLLECTOR_DATABASE_PWD". If the value of DatabasePWD is empty, a panic will be raised.
 	DatabasePWD = ""
 
-	// DatabasePort indicate database service port. It equal to environment variable "LOG_COLLECTOR_DATABASE_PORT",
+	// DatabasePort indicate database service port. It equals to environment variable "LOG_COLLECTOR_DATABASE_PORT",
 	// default is 3306.
 	DatabasePort = 0
 
-	// DatabaseHost indicate hostname or host ip for database, It equal to environment variable
+	// DatabaseHost indicate hostname or host ip for database, It equals to environment variable
 	// "LOG_COLLECTOR_DATABASE_HOST". Default is "127.0.0.1".
 	DatabaseHost = ""
 )
@@ -41,9 +48,9 @@ func InitGlobalVariable() {
 	var err error = nil
 
 	// init ServicePort
-	ServicePort = os.Getenv("LOG_COLLECTOR_PORT")
-	if ServicePort == "" {
-		ServicePort = "9188"
+	servicePort, err := strconv.Atoi(os.Getenv("LOG_COLLECTOR_COLLECTOR_PORT"))
+	if err == nil {
+		ServicePort = servicePort
 	}
 
 	// init DatabaseType

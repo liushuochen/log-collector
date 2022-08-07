@@ -1,0 +1,17 @@
+resources:
+- name: ConfigMap
+  url: api/v1/namespaces/cran1/configmaps
+  namespaced: true
+  api: v1
+- name: Endpoint
+  url: api/v1/namespaces/cran1/endpoints
+  namespaced: true
+  api: v1
+- name: Node
+  url: api/v1/node
+  namespaced: false
+  api: v1
+- name: Deployment
+  url: apis/apps/v1/namespaces/cran1/deployments
+  namespaced: true
+  api: apps/v1
