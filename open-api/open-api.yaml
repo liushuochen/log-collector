@@ -79,21 +79,61 @@ paths:
                     description: Is it successful
                   message:
                     type: object
-                    description: response main message
+                    description: Response main message
                     properties:
-                      service_version:
-                        type: string
-                        description: log-collector service version
-                      go_version:
-                        type: string
-                        description: Go runtime version
+                      service:
+                        type: object
+                        description: Each component version information
+                        properties:
+                          api:
+                            type: object
+                            description: Version information for api micro service.
+                            properties:
+                              api_version:
+                                type: string
+                                description: API micro service version.
+                              build:
+                                type: string
+                                description: API micro service compile version.
+                          collector:
+                            type: object
+                            description: Version information for collector micro service.
+                            properties:
+                              collector_version:
+                                type: string
+                                description: Collector micro service version.
+                              build:
+                                type: string
+                                description: Collector micro service compile version.
+                          identify:
+                            type: object
+                            description: Version information for identify micro service.
+                            properties:
+                              identify_version:
+                                type: string
+                                description: Identify micro service version.
+                              build:
+                                type: string
+                                description: Identify micro service compile version.
               example: |-
                 {
                   "code": 200,
                   "success": true,
                   "message": {
-                    "service_version": "0.1.0",
-                    "go_version": "go1.16.5"
+                    "service": {
+                      "api": {
+                        "api_version": "__VERSION__",
+                        "build": "go1.16.5"
+                      },
+                      "collector": {
+                        "collector_version": "__VERSION__",
+                        "build": "go1.16.5"
+                      },
+                      "identify": {
+                        "identify_version": "__VERSION__",
+                        "build": "go1.16.5"
+                      }
+                    }
                   }
                 }
 tags:
