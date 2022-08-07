@@ -23,18 +23,6 @@ func (service *Service) HealthCheck(c *gin.Context) {
 }
 
 // GetVersion function used to get each microservice components version information.
-// Response (not real HTTP response) example:
-// {
-//      "service": {
-//          "api": {
-//				"api_version": "0.1.0",
-//				"build": "go1.16.5"
-//          },
-//			"collector": {
-//				"collector_version": "0.1.0",
-//				"build": "go1.16.5"
-//			}
-// }
 func (service *Service) GetVersion(c *gin.Context) {
 	response := controller.GetVersion()
 	resp.SendResponse(c, resp.Ok, response)

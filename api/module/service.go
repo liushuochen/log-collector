@@ -23,6 +23,7 @@ type Version struct {
 type ServiceVersion struct {
 	API       *APIVersion       `json:"api"`
 	Collector *CollectorVersion `json:"collector"`
+	Identify  *IdentifyVersion  `json:"identify"`
 }
 
 // CollectorVersion structure contains collector component information.
@@ -37,6 +38,12 @@ type APIVersion struct {
 	GoVersion string `json:"build"`
 }
 
+// IdentifyVersion structure contains identify component information.
+type IdentifyVersion struct {
+	Version   string `json:"identify_version"`
+	GoVersion string `json:"build"`
+}
+
 // NewVersion returns a Version pointer. It contains api server version and build version.
 func NewVersion() *Version {
 	service := new(ServiceVersion)
@@ -45,11 +52,10 @@ func NewVersion() *Version {
 	api.Version = config.ServiceVersion
 	api.GoVersion = runtime.Version()
 
-	collector := new(CollectorVersion)
-
 	v := new(Version)
 	v.Service = service
 	v.Service.API = api
-	v.Service.Collector = collector
+	v.Service.Collector = new(CollectorVersion)
+	v.Service.Identify = new(IdentifyVersion)
 	return v
 }

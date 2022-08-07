@@ -27,6 +27,7 @@ func ServiceHealthCheck() *module.Health {
 func GetVersion() *module.Version {
 	version := module.NewVersion()
 	getCollectorServiceVersion(version)
+	getIdentifyServiceVersion(version)
 	return version
 }
 
@@ -65,5 +66,44 @@ func getCollectorServiceVersion(version *module.Version) {
 
 	buildVersion, _ := message["build"].(string)
 	version.Service.Collector.GoVersion = buildVersion
+	return
+}
+
+func getIdentifyServiceVersion(version *module.Version) {
+	req := requests.New(
+		"get version",
+		config.IdentifyServiceIP,
+		"/identify/v1/version",
+		requests.GET,
+		config.IdentifyServicePort,
+	)
+	req.Mode = requests.HTTP
+	resp, err := req.Send()
+	if err != nil {
+		return
+	}
+
+	result := make(map[string]interface{})
+	err = json.Unmarshal([]byte(resp.Body), &result)
+	if err != nil {
+		return
+	}
+
+	code, ok := result["code"]
+	if !ok || int(code.(float64)) != 200 {
+		return
+	}
+
+	msg, ok := result["message"]
+	if !ok {
+		return
+	}
+	message := msg.(map[string]interface{})
+
+	v, _ := message["identify_version"].(string)
+	version.Service.Identify.Version = v
+
+	buildVersion, _ := message["build"].(string)
+	version.Service.Identify.GoVersion = buildVersion
 	return
 }
