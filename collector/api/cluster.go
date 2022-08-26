@@ -80,3 +80,33 @@ func (cluster *Cluster) create(c *gin.Context, request req.CreateClusterRequest)
 	resp.SendResponse(c, resp.Created, response)
 	return
 }
+
+// Delete method used to delete a cluster resource.
+func (cluster *Cluster) Delete(c *gin.Context) {
+	var request req.DeleteClusterRequest
+	err := c.ShouldBindJSON(&request)
+	if err != nil {
+		resp.SendResponse(c, resp.BadRequest, err.Error())
+		return
+	}
+
+	validate := validator.New(&validator.Config{TagName: "binding"})
+	err = validate.Struct(request)
+	if err != nil {
+		resp.SendResponse(c, resp.BadRequest, err.Error())
+		return
+	}
+
+	response, err := controller.ClusterDelete(request.UUID)
+	if err != nil {
+		switch err.(type) {
+		case exception.ClusterNotFoundError:
+			resp.SendResponse(c, resp.ResourceNotFound, err.Error())
+		default:
+			resp.SendResponse(c, resp.InternalError, err.Error())
+		}
+		return
+	}
+
+	resp.SendResponse(c, resp.Ok, response)
+}

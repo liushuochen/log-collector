@@ -20,3 +20,19 @@ func NewEmptyClusterError(name string) EmptyClusterError {
 	e.baseError = newBaseError(message)
 	return e
 }
+
+// ClusterNotFoundError structure define an error that cannot find cluster by UUID from database.
+type ClusterNotFoundError struct {
+	UUID string
+	baseError
+}
+
+// NewClusterNotFoundError returns a ClusterNotFoundError with a given uuid.
+func NewClusterNotFoundError(uuid string) ClusterNotFoundError {
+	e := ClusterNotFoundError{
+		UUID: uuid,
+	}
+	message := fmt.Sprintf("Cannot find cluster %s", e.UUID)
+	e.baseError = newBaseError(message)
+	return e
+}

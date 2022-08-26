@@ -8,3 +8,8 @@ type CreateClusterRequest struct {
 	KubeConfig  string `json:"kube_config" binding:"required"`
 	Description string `json:"description" binding:""`
 }
+
+// DeleteClusterRequest defines cluster delete body in JSON.
+type DeleteClusterRequest struct {
+	UUID string `json:"uuid" binding:"required"`
+}

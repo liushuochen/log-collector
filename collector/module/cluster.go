@@ -21,12 +21,12 @@ const (
 // CreateTime: Cluster create time in collector service.
 type Cluster struct {
 	UUID        string `json:"uuid" gorm:"type:char(36);primary_key"`
-	IP          string `json:"ip" gorm:"unique_index"`
-	DomainName  string `json:"domain_name" gorm:"unique_index"`
-	Name        string `json:"name" gorm:"not null"`
-	Status      string `json:"status" gorm:"not null"`
-	Description string `json:"description" gorm:"text"`
-	KubeConfig  string `json:"kube_config" gorm:"text"`
+	IP          string `json:"ip" gorm:"type:varchar(255);unique_index"`
+	DomainName  string `json:"domain_name" gorm:"type:varchar(255);unique_index"`
+	Name        string `json:"name" gorm:"type:varchar(255);not null"`
+	Status      string `json:"status" gorm:"type:varchar(30);not null"`
+	Description string `json:"description" gorm:"type:text"`
+	KubeConfig  string `json:"kube_config" gorm:"type:longtext"`
 	CreateTime  int64  `json:"create_time" gorm:"type:bigint unsigned;not null"`
 }
 
@@ -58,7 +58,17 @@ func (cluster *Cluster) Create() error {
 	return db.Create(cluster)
 }
 
+// Delete method used to create a data to cluster table.
+func (cluster *Cluster) Delete() error {
+	return db.Delete(cluster)
+}
+
 // Update method used to update a data to cluster table.
 func (cluster *Cluster) Update() error {
 	return db.Update(cluster)
+}
+
+// Search method used to search target cluster based on designated uuid.
+func (cluster *Cluster) Search() error {
+	return db.Search(cluster, "uuid=?", cluster.UUID)
 }

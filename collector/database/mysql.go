@@ -4,6 +4,7 @@ package database
 
 import (
 	"fmt"
+	"gorm.io/gorm/logger"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -36,7 +37,7 @@ func (md *MySQLDatabase) Connect(username, pwd, host string, port, timeout int) 
 	}
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local&timeout=%ds", username, pwd,
 		host, port, md.name, timeout)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
 	if err != nil {
 		return err
 	}
@@ -66,9 +67,16 @@ func (md *MySQLDatabase) Update(data interface{}) error {
 	return md.db.Save(data).Error
 }
 
-// Search method used to find values based on query and args in a table. It will return an error while search failed.
+// Delete method used to delete a value in a table. It will return an error while update failed.
+// The data must contain primary key.
+func (md *MySQLDatabase) Delete(data interface{}) error {
+	return md.db.Delete(data).Error
+}
+
+// Search method used to find first record that match given conditions, order by primary key. It will return an error
+// while search failed.
 func (md *MySQLDatabase) Search(data, query interface{}, args ...interface{}) error {
-	return md.db.Where(query, args).Find(data).Error
+	return md.db.Where(query, args).First(data).Error
 }
 
 // SearchWithoutQuery method used to find all values in a table. It will return an error while search failed.

@@ -4,6 +4,7 @@ package controller
 
 import (
 	"gopkg.in/yaml.v2"
+	"gorm.io/gorm"
 	"log-collector/exception"
 	"log-collector/module"
 	"log-collector/requests"
@@ -38,6 +39,33 @@ func ClusterCreate(uuid, ip, description, kubeConfig string) (*module.Cluster, e
 
 		_ = cluster.Update()
 	}()
+	return cluster, nil
+}
+
+// ClusterDelete function returns a module.Cluster pointer. It will delete cluster in database.
+// If cluster does not exist in database, an exception.ClusterNotFoundError will return.
+func ClusterDelete(uuid string) (*module.Cluster, error) {
+	cluster, err := searchCluster(uuid)
+	if err != nil {
+		return nil, err
+	}
+
+	err = cluster.Delete()
+	if err != nil {
+		return nil, err
+	}
+
+	return cluster, nil
+}
+
+func searchCluster(uuid string) (*module.Cluster, error) {
+	cluster := new(module.Cluster)
+	cluster.UUID = uuid
+	err := cluster.Search()
+	if err == gorm.ErrRecordNotFound {
+		return nil, exception.NewClusterNotFoundError(uuid)
+	}
+
 	return cluster, nil
 }
 
