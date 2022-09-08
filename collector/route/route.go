@@ -40,6 +40,7 @@ func initClusterRouter(group *gin.RouterGroup) {
 	cluster := new(api.Cluster)
 	group.POST("/cluster/create", cluster.CreateWithKubeConfigContent)
 	group.DELETE("/cluster/delete", cluster.Delete)
+	group.PUT("/cluster/edit", cluster.Edit)
 }
 
 func initClusterRouterV2(group *gin.RouterGroup) {

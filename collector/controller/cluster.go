@@ -58,6 +58,28 @@ func ClusterDelete(uuid string) (*module.Cluster, error) {
 	return cluster, nil
 }
 
+// ClusterEdit function used to update name, description for designated cluster with given uuid.
+// It returns a pointer of module.Cluster which contain given name and description, and an error.
+// If cluster does not exist in database, an exception.ClusterNotFoundError will return.
+func ClusterEdit(uuid, name, description string) (*module.Cluster, error) {
+	cluster, err := searchCluster(uuid)
+	if err != nil {
+		return nil, err
+	}
+
+	if name != "" {
+		cluster.Name = name
+	}
+	if description != "" {
+		cluster.Description = description
+	}
+	err = cluster.Update()
+	if err != nil {
+		return nil, err
+	}
+	return cluster, nil
+}
+
 func searchCluster(uuid string) (*module.Cluster, error) {
 	cluster := new(module.Cluster)
 	cluster.UUID = uuid

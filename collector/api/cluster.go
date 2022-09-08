@@ -110,3 +110,38 @@ func (cluster *Cluster) Delete(c *gin.Context) {
 
 	resp.SendResponse(c, resp.Ok, response)
 }
+
+// Edit method used to edit a cluster resource.
+func (cluster *Cluster) Edit(c *gin.Context) {
+	var request req.EditClusterRequest
+	err := c.ShouldBindJSON(&request)
+	if err != nil {
+		resp.SendResponse(c, resp.BadRequest, err.Error())
+		return
+	}
+
+	validate := validator.New(&validator.Config{TagName: "binding"})
+	err = validate.Struct(request)
+	if err != nil {
+		resp.SendResponse(c, resp.BadRequest, err.Error())
+		return
+	}
+
+	if request.Name == "" && request.Description == "" {
+		resp.SendResponse(c, resp.BadRequest, "must designated new value of name or description for cluster")
+		return
+	}
+
+	response, err := controller.ClusterEdit(request.UUID, request.Name, request.Description)
+	if err != nil {
+		switch err.(type) {
+		case exception.ClusterNotFoundError:
+			resp.SendResponse(c, resp.ResourceNotFound, err.Error())
+		default:
+			resp.SendResponse(c, resp.InternalError, err.Error())
+		}
+		return
+	}
+
+	resp.SendResponse(c, resp.Ok, response)
+}

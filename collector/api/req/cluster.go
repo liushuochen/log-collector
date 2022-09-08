@@ -13,3 +13,10 @@ type CreateClusterRequest struct {
 type DeleteClusterRequest struct {
 	UUID string `json:"uuid" binding:"required"`
 }
+
+// EditClusterRequest defines cluster edit body in JSON.
+type EditClusterRequest struct {
+	UUID        string `json:"uuid" binding:"required"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
